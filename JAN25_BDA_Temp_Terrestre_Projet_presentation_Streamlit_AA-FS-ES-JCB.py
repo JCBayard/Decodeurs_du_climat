@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -57,7 +58,11 @@ custom_width_style = """
 # Injection du CSS
 st.markdown(custom_width_style, unsafe_allow_html=True)
 
-st.image(r"D:\Logo Les Décodeurs du Climat.jpg", width=150,caption="", use_column_width=True)
+# Construire le chemin relatif vers l'image
+chemin_image = os.path.join(os.getcwd(), "Logo Les Décodeurs du Climat.jpg")
+# Charger l'image avec Streamlit
+st.image(chemin_image, width=150, caption="", use_column_width=True)
+
 from PIL import Image
 
 import base64
@@ -65,8 +70,12 @@ import base64
 def get_base64_of_image(file_path):
     with open(file_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+
 # Convertir l'image en Base64
-image_path = "D:/thermometre_glb_transp.jpg"
+# Construire le chemin relatif vers l'image
+image_path = os.path.join(os.getcwd(), "thermometre_glb_transp.jpg")
+# Charger l'image avec Streamlit
+
 image_base64 = get_base64_of_image(image_path)
 # CSS pour appliquer l'image en arrière-plan de la sidebar
 sidebar_style = f"""
@@ -82,8 +91,8 @@ sidebar_style = f"""
 # Injection du CSS dans Streamlit
 st.markdown(sidebar_style, unsafe_allow_html=True)
 
-# Charger l'image depuis un chemin local
-image_path = "D:\DTS-new-logo.png"
+# Construire le chemin relatif vers l'image
+image2_path = os.path.join(os.getcwd(), "DTS-new-logo.png")
 
 # CSS pour centrer l'image
 centered_image_style = """
@@ -100,7 +109,7 @@ centered_image_style = """
 st.markdown(centered_image_style, unsafe_allow_html=True)
 
 # Afficher l'image dans la sidebar
-st.sidebar.image(image_path, caption="DataScientest", width=160)  # Ajuster la largeur si nécessaire
+st.sidebar.image(image2_path, caption="DataScientest", width=160)  # Ajuster la largeur si nécessaire
 
 st.sidebar.write("## Soutenance Projet")
 st.sidebar.write("### TEMPERATURE TERRESTRE")
@@ -211,7 +220,10 @@ if page == pages[1] :
     scroll_to_top() # appel de la fonction pour remonter en haut de la page   
     st.write("## Exploration des données 'NASA Globe' et 'OWID' (Our World In Data)")
 
-    T_GLB = pd.read_csv("D:/GLB.Ts+dSST.csv", skiprows=1)
+    # Construire le chemin relatif vers le fichier CSV
+    chemin_csv = os.path.join(os.getcwd(), "GLB.Ts+dSST.csv")
+    # Charger le fichier CSV
+    T_GLB = pd.read_csv(chemin_csv, skiprows=1)
 
     st.markdown(
     """
@@ -253,7 +265,7 @@ if page == pages[1] :
         unsafe_allow_html=True)
     
     if st.checkbox("**Dataframe OWID**", key="df_owid"):
-        source1 = r"D:\owid-co2-data.csv"
+        source1 = os.path.join(os.getcwd(), "owid-co2-data.csv")
         df = pd.read_csv(source1)
         df_2 = df
         df_2['year']=df_2['year'].astype(int).astype(str)
@@ -270,8 +282,8 @@ if page == pages[1] :
             if st.checkbox("Proportion de valeurs manquantes", key="missing_owid"):
                 st.write(df.isna().sum() / len(df['year']) * 100)
 
-                df_world_var_select_visu = pd.read_csv("D://df_world_var_select_Visu.csv")
-
+                df_world_var_select_visu_path = os.path.join(os.getcwd(), "df_world_var_select_Visu.csv")
+                df_world_var_select_visu = pd.read_csv(df_world_var_select_visu_path)
                 st.write("### Histogramme des valeurs manquantes (NaN)")
                 st.write("##### ")
                 st.write("##### Ce graphique montre le nombre de <u> **valeurs annuelles manquantes**</u> (NaN) par <u>**décennie**</u> et par variable.", unsafe_allow_html=True)
@@ -333,7 +345,10 @@ if page == pages[1] :
         col1, col2 = st.columns([0.05, 0.95])
         with col2:
             if st.checkbox("Préparation du dataframe pour le calcul de la population", key="prep_df"):
-                df_world2 = pd.read_csv("D://df_world2.csv")
+                
+                df_world2_path = os.path.join(os.getcwd(), "df_world2.csv")
+                df_world2 = pd.read_csv(df_world2_path)
+
                 col3, col4 = st.columns([0.05, 0.95])
                 with col4:
                     #if st.checkbox("Aperçu du dataframe", key="apercu_world2"):
@@ -374,14 +389,16 @@ if page == pages[1] :
                 st.write("Voici la formule utilisée pour calculer cette courbe :")
                 st.write(model)
 
-                df_world = pd.read_csv("D://df_world.csv")
+                df_world_path = os.path.join(os.getcwd(), "df_world.csv")
+                df_world = pd.read_csv(df_world_path)
                 df_world_2 = df_world
                 df_world_2['year']=df_world_2['year'].astype(int).astype(str)
                 st.write("Nous avons intégré les valeurs calculées par le **polynôme** dans le dataframe d'origine.")
                 st.dataframe(df_world_2.head())
 
                 st.write("Nous avons concaténé les dataframes OWID et NASA.")
-                merged_df = pd.read_csv("D://df_world+nasa.csv")
+                merged_df_path = os.path.join(os.getcwd(), "df_world+nasa.csv")
+                merged_df = pd.read_csv(merged_df_path)
                 merged_df_2 = merged_df
                 merged_df_2['year']=merged_df_2['year'].astype(int).astype(str)
                 st.dataframe(merged_df_2.head())
@@ -389,7 +406,7 @@ if page == pages[1] :
 if page == pages[2] : 
     scroll_to_top() # appel de la fonction pour remonter en haut de la page
     st.write("## Visualisation des données OWID")
-    merged_df = pd.read_csv("D://df_world+nasa.csv")
+
     st.markdown(
     """
     <style>
@@ -406,13 +423,15 @@ if page == pages[2] :
         "Sélectionnez la variable à afficher :",
         ["CO2", "Méthane", "Population", "Différents gaz à effet de serre"])
     
+        merged_df_path = os.path.join(os.getcwd(), "df_world+nasa.csv")
+        merged_df = pd.read_csv(merged_df_path)
     if option == "CO2":
 
         col1, col2,col3= st.columns([2.5,3,3])
         with col1:
             st.write("#### Analyse de la relation CO2 - Température")
             st.write("Ce graphique explore la relation entre les émissions de CO2 (including LUC) et la température moyenne annuelle (J-D).")
-        
+            
             # Création du graphique
             fig, ax = plt.subplots()
             sns.scatterplot(data=merged_df, x="co2_including_luc", y="J-D", color="blue", label="Données", ax=ax)
@@ -565,7 +584,9 @@ if page == pages[2] :
             ######### GRAPHE 1 #########
             st.write("### Évolution de la différence de température terrestre (1880-2023)")
             st.write("Ce graphique montre l'évolution de l'impact de 2 gaz à effet de serre (**Dioxyde de Carbone (CO2)** et **Oxyde nitreux (NO2)**) et l'**ensemble des GES** (ou GHG) sur la température mondiale.")
-            OWID1_CO2_SHARE = pd.read_csv("D://OWID1_CO2_SHARE.csv")
+            
+            OWID1_CO2_SHARE_path = os.path.join(os.getcwd(),  "OWID1_CO2_SHARE.csv")
+            OWID1_CO2_SHARE = pd.read_csv(OWID1_CO2_SHARE_path)
 
             # Création du graphique
             fig, ax = plt.subplots(figsize=(10, 6))
@@ -584,8 +605,11 @@ if page == pages[2] :
         
         with col3:
             ######### GRAPHE 2 #########
-            OWID1_world_ghg = pd.read_csv("D://OWID1_world_ghg.csv")
-            T_GLB = pd.read_csv("D://T_GLB.csv")
+            OWID1_world_ghg_path = os.path.join(os.getcwd(),  "OWID1_world_ghg.csv")
+            OWID1_world_ghg = pd.read_csv(OWID1_world_ghg_path)
+
+            T_GLB_path = os.path.join(os.getcwd(),  "T_GLB.csv")
+            T_GLB = pd.read_csv(T_GLB_path)
             T_GLB = T_GLB.iloc[:-1]
 
             st.write("### Évolution des émissions de gaz à effet de serre vs. température (1880-2023)")
@@ -732,7 +756,8 @@ if page == pages[2] :
     st.write("##### Evolution des écarts de températures par zones latitudinales",unsafe_allow_html=True)
    
     # Charger les données
-    data = pd.read_csv('D:/ZonAnn.Ts+dSST.csv')
+    data_path = os.path.join(os.getcwd(),  "ZonAnn.Ts+dSST.csv")
+    data = pd.read_csv(data_path)
     # Sélectionner les colonnes nécessaires
     cols = ['Year', '64N-90N', '44N-64N', '24N-44N', 'EQU-24N', '24S-EQU', '44S-24S', '64S-44S', '90S-64S']
     data = data[cols]
@@ -782,12 +807,21 @@ if page == pages[3] :
     st.write("### Modélisation Machine Learning")
     # 📌 Charger les datasets
     
-    df_ML1 = pd.read_csv("D:/df_ML1.xls", dtype={"year": str})  
-    df_ML2 = pd.read_csv("D:/df_ML2.xls", dtype={"year": str})
-    df_ML3 = pd.read_csv("D:/df_ML3.xls", dtype={"year": str})
-    df_ML4 = pd.read_csv("D:/df_ML4.xls", dtype={"year": str})
-    df_ML5 = pd.read_csv("D:/df_ML5_RFR.xls", dtype={"year": str})
-    ML6_best = pd.read_csv("D:/ML6_best.xls", dtype={"year": str})
+    # Construire les chemins relatifs pour chaque fichier
+    chemin_df_ML1 = os.path.join(os.getcwd(), "df_ML1.xls")
+    chemin_df_ML2 = os.path.join(os.getcwd(), "df_ML2.xls")
+    chemin_df_ML3 = os.path.join(os.getcwd(), "df_ML3.xls")
+    chemin_df_ML4 = os.path.join(os.getcwd(), "df_ML4.xls")
+    chemin_df_ML5 = os.path.join(os.getcwd(), "df_ML5_RFR.xls")
+    chemin_ML6_best = os.path.join(os.getcwd(), "ML6_best.xls")
+
+    # Charger les fichiers avec pandas
+    df_ML1 = pd.read_csv(chemin_df_ML1, dtype={"year": str})  
+    df_ML2 = pd.read_csv(chemin_df_ML2, dtype={"year": str})
+    df_ML3 = pd.read_csv(chemin_df_ML3, dtype={"year": str})
+    df_ML4 = pd.read_csv(chemin_df_ML4, dtype={"year": str})
+    df_ML5 = pd.read_csv(chemin_df_ML5, dtype={"year": str})
+    ML6_best = pd.read_csv(chemin_ML6_best, dtype={"year": str})
 
     df_ML1 = df_ML1.set_index('year', drop=False)
     df_ML2 = df_ML2.set_index('year', drop=False)
@@ -808,19 +842,20 @@ if page == pages[3] :
             model_choice = st.selectbox("📌 Choisissez le nombre de variables :", ["Toutes les variables.", "3 Variables", "4 Variables.","5 Variables", "6 Variables"])
             if model_choice == "Toutes les variables.":
                 df = df_ML1
-                model_path = "D:/Modèle_dtr.pkl"
+                model_path = os.path.join(os.getcwd(), "Modèle_dtr.pkl")
             elif model_choice == "4 Variables.":
                 df = df_ML2
-                model_path = "D:/Modèle_dtr2.pkl"
+                model_path = os.path.join(os.getcwd(), "Modèle_dtr2.pkl")
             
         elif model_type == "Régression linéaire":
             model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables.", "3 Variables", "4 Variables","5 Variables", "6 Variables"])
             if model_choice == "Toutes les variables.":
                 df = df_ML3
-                model_path = "D:/Modèle_LR1.pkl"
+                model_path = os.path.join(os.getcwd(), "Modèle_LR1.pkl")
+
             elif model_choice == "5 Variables":
                 df = df_ML4
-                model_path = "D:/Modèle_LR2.pkl"
+                model_path = os.path.join(os.getcwd(), "Modèle_LR2.pkl")
 
         elif model_type == "Forêt aléatoire":
             model_choice = st.selectbox("📌 Choisissez le nombre de variables", ["Toutes les variables.", "3 Variables", "4 Variables","5 Variables", "6 Variables."])
@@ -844,17 +879,16 @@ if page == pages[3] :
                 df = df_ML5
                 
                 if model_choice_split == 0.2:
-                    model_path = "D:/Modèle_RFR1.pkl"
+                    model_path = os.path.join(os.getcwd(), "Modèle_RFR1.pkl")
                 elif model_choice_split == 0.25:
-                    model_path = "D:/Modèle_RFR_best.pkl"
+                    model_path = os.path.join(os.getcwd(), "Modèle_RFR_best.pkl")
                 elif model_choice_split == 0.5:
-                    model_path = "D:/Modèle_RFR2.pkl"
+                    model_path = os.path.join(os.getcwd(), "Modèle_RFR2.pkl")
             
             elif model_choice == "6 Variables.":
                 df = ML6_best
-                
                 model_choice_split == 0.25
-                model_path = "D:/Modèle_RFR_6.pkl"
+                model_path = os.path.join(os.getcwd(), "Modèle_RFR_6.pkl")
 
 
         # 📌 Séparer les variables
@@ -1012,8 +1046,12 @@ if page == pages[4] :
 
     # Action conditionnelle si la checkbox est cochée
     if box_ticked:
-        ## Appel du df_ML0_pred à charger depuis D:/
-        df_ML0 = pd.read_csv("D:/df_ML0_pred.csv")
+        ## Appel du df_ML0_pred à charger depuis 
+        # Construire le chemin relatif vers le fichier CSV
+        chemin_df_ML0 = os.path.join(os.getcwd(), "df_ML0_pred.csv")
+        # Charger le fichier CSV avec pandas
+        df_ML0 = pd.read_csv(chemin_df_ML0)
+
         df_ML0['year']=df_ML0.year.astype(str)
         #df_ML0['population']=df_ML0.population.astype(int)
         
@@ -1135,7 +1173,11 @@ if page == pages[4] :
                     with col2:
                         # Afficher le tableau complet
                         st.write("Tableau de la meilleure combinaison des hyperparamètres **par variable**", unsafe_allow_html=True)
-                        df_best_param_var_incl_othco2_NA = pd.read_csv("D:/df_best_param_var_incl_othco2_NA.csv")
+                        # Construire le chemin relatif vers le fichier CSV
+                        chemin_df_best_param = os.path.join(os.getcwd(), "df_best_param_var_incl_othco2_NA.csv")
+                        # Charger le fichier CSV avec pandas
+                        df_best_param_var_incl_othco2_NA = pd.read_csv(chemin_df_best_param)
+                        
                         st.dataframe(df_best_param_var_incl_othco2_NA)
 
                         # Checkbox pour le tableau spécifique
@@ -1154,7 +1196,11 @@ if page == pages[4] :
                                 "Tableau de la meilleure combinaison des hyperparamètres pour <u>**'others_co2'**</u>",
                                 unsafe_allow_html=True,
                             )
-                            df_best_param_var_expl_others_co2 = pd.read_csv("D:/df_best_param_var_expl_others_co2.csv")
+                            # Construire le chemin relatif vers le fichier CSV
+                            chemin_df_best_param = os.path.join(os.getcwd(), "df_best_param_var_expl_others_co2.csv")
+                            # Charger le fichier CSV avec pandas
+                            df_best_param_var_expl_others_co2 = pd.read_csv(chemin_df_best_param)
+
                             st.dataframe(df_best_param_var_expl_others_co2)
                           
                             others_co2_ticked = st.checkbox("Analyse 'others_co2'", label_visibility="visible") 
@@ -1202,7 +1248,11 @@ if page == pages[4] :
                     liste_variable_to_pred_2 ) 
 
                     st.write("Prédictions: 2024-2028 & ...& 2046-2050")
-                    df_future_clean = pd.read_csv("D:/df_future_clean.csv")
+                    # Construire le chemin relatif vers le fichier CSV
+                    chemin_df_future_clean = os.path.join(os.getcwd(), "df_future_clean.csv")
+                    # Charger le fichier CSV avec pandas
+                    df_future_clean = pd.read_csv(chemin_df_future_clean)
+                    
                     df_future_clean2=df_future_clean
                     df_future_clean2.year=df_future_clean2.year.astype(str)
                     df_future_clean2=df_future_clean2.set_index('year', drop=False)
@@ -1212,10 +1262,16 @@ if page == pages[4] :
                     df_future_clean2_combined = pd.concat([df_future_clean2_top, df_future_clean2_bottom])
                     st.dataframe(df_future_clean2_combined[selected_variable_2])
                 with col2:
-                    merged_df = pd.read_csv("D:/merged_df_pred.csv")
-                    #df_ML0 = pd.read_csv("D:/df_ML0_pred.csv")
-                    df_best_param_var_expl_excl_othco2 = pd.read_csv("D:/df_best_param_var_expl_excl_othco2.csv")
-                    df_best_param_var_expl_others_co2 = pd.read_csv("D:/df_best_param_var_expl_others_co2.csv")
+                    # Construire les chemins relatifs pour chaque fichier
+                    chemin_merged_df = os.path.join(os.getcwd(), "merged_df_pred.csv")
+                    chemin_df_param_excl_othco2 = os.path.join(os.getcwd(), "df_best_param_var_expl_excl_othco2.csv")
+                    chemin_df_param_others_co2 = os.path.join(os.getcwd(), "df_best_param_var_expl_others_co2.csv")
+
+                    # Charger les fichiers CSV avec pandas
+                    merged_df = pd.read_csv(chemin_merged_df)
+                    df_best_param_var_expl_excl_othco2 = pd.read_csv(chemin_df_param_excl_othco2)
+                    df_best_param_var_expl_others_co2 = pd.read_csv(chemin_df_param_others_co2)
+
                     df_best_param_var_expl = pd.concat([df_best_param_var_expl_excl_othco2, df_best_param_var_expl_others_co2])
 
                     if selected_variable_2:
@@ -1277,18 +1333,25 @@ if page == pages[4] :
                     st.write("### Prédictions en MACHINE LEARNING de la variable cible")
                     ################################# PREPA INFO POUR LE MODELE ############################################
                     # Chargement des df
-                    df_ML1 = pd.read_csv("D:/df_ML1_pred.csv")
-                    df_ML2 = df_ML1.drop(["land_use_change_co2","nitrous_oxide","others_co2","cumulative_co2"], axis = 1)
-                    df_ML2 = df_ML2.drop("year.1", axis = 1)
+                    # Construire les chemins relatifs pour chaque fichier
+                    chemin_df_ML1 = os.path.join(os.getcwd(), "df_ML1_pred.csv")
+                    chemin_Var_expl_futures = os.path.join(os.getcwd(), "Var_expl_futures_pred.csv")
+                    chemin_Var_expl_futures_norm = os.path.join(os.getcwd(), "Var_expl_futures_norm_pred.csv")
+
+                    # Charger et traiter df_ML1
+                    df_ML1 = pd.read_csv(chemin_df_ML1)
+                    df_ML2 = df_ML1.drop(["land_use_change_co2", "nitrous_oxide", "others_co2", "cumulative_co2"], axis=1)
+                    df_ML2 = df_ML2.drop("year.1", axis=1)
                     df_ML2['year'] = df_ML2['year'].astype(str)
                     df_ML2 = df_ML2.set_index('year', drop=False)
 
-                    Var_expl_futures = pd.read_csv("D:/Var_expl_futures_pred.csv")
+                    # Charger et traiter Var_expl_futures
+                    Var_expl_futures = pd.read_csv(chemin_Var_expl_futures)
                     Var_expl_futures['year'] = Var_expl_futures['year'].astype(str)
                     Var_expl_futures = Var_expl_futures.set_index('year', drop=False)
-                    #Var_expl_futures = Var_expl_futures.drop('year.1', axis=1)
 
-                    Var_expl_futures_norm = pd.read_csv("D:/Var_expl_futures_norm_pred.csv")
+                    # Charger et traiter Var_expl_futures_norm
+                    Var_expl_futures_norm = pd.read_csv(chemin_Var_expl_futures_norm)
                     Var_expl_futures_norm['year'] = Var_expl_futures_norm['year'].astype(str)
                     Var_expl_futures_norm = Var_expl_futures_norm.set_index('year', drop=False)
                     Var_expl_futures_norm = Var_expl_futures_norm.drop('year.1', axis=1)
@@ -1305,9 +1368,6 @@ if page == pages[4] :
                     
                     split_ratio = 0.25
                     shuffle_on_off = True
-                    
-                    # chargement du modèle entrainé RFR_best
-                    #loaded_RFR_best_model = joblib.load("D:/Modèle_RFR_best.pkl")
 
                     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = split_ratio, shuffle=shuffle_on_off, random_state=42)
                     
@@ -1614,7 +1674,11 @@ if page == pages[4] :
                     if box_ticked:
                             st.write("### Prédictions ARIMA de la variable cible")
                             
-                            df_future_y_temp = pd.read_csv("D:/df_future_y_temp.csv")
+                            # Construire le chemin relatif vers le fichier CSV
+                            chemin_df_future_y_temp = os.path.join(os.getcwd(), "df_future_y_temp.csv")
+                            # Charger le fichier CSV avec pandas
+                            df_future_y_temp = pd.read_csv(chemin_df_future_y_temp)
+
                             col1, col2, col3 = st.columns([1,1,0.4])  # Ajustez les proportions si nécessaire
                             with col1:
                                 text50 = """
@@ -1635,18 +1699,29 @@ if page == pages[4] :
                                 st.markdown(text50, unsafe_allow_html=True)
                             with col2:
                                 st.write("Tableau de la meilleure combinaison des hyperparamètres pour la variable cible où 'J-D' = Ecarts de température moyens annuels de Janvier à Décembre")
-                                df_best_parametres_y_temp = pd.read_csv("D:/df_best_parametres_y_temp.csv")
+
+                                # Construire le chemin relatif vers le fichier CSV
+                                df_best_parametres_y_temp = os.path.join(os.getcwd(), "df_best_parametres_y_temp.csv")
+                                # Charger le fichier CSV avec pandas
+                                df_best_parametres_y_temp = pd.read_csv(df_best_parametres_y_temp)
+
                                 st.dataframe(df_best_parametres_y_temp)
                             
                             # GRAPHE ARIMA
                             #-------------
                             # Chargement des données
-                            df_future_y_temp = pd.read_csv("D:/df_future_y_temp.csv")
-                            merged_df = pd.read_csv("D:/merged_df_pred.csv")
+                            # Construire les chemins relatifs pour chaque fichier
+                            chemin_df_future_y_temp = os.path.join(os.getcwd(), "df_future_y_temp.csv")
+                            chemin_merged_df = os.path.join(os.getcwd(), "merged_df_pred.csv")
+                            chemin_df_ML0 = os.path.join(os.getcwd(), "df_ML0_pred.csv")
+
+                            # Charger les fichiers CSV avec pandas
+                            df_future_y_temp = pd.read_csv(chemin_df_future_y_temp)
+                            merged_df = pd.read_csv(chemin_merged_df)
+                            df_ML0 = pd.read_csv(chemin_df_ML0)  # Charge également df_ML0
 
                             # Extraction des séries
                             series = merged_df['J-D']
-                            df_ML0 = pd.read_csv("D:/df_ML0_pred.csv")  # Chargez également df_ML0
 
                             # Dimensions et polices ajustables
                             font_title_size = 18
@@ -1798,27 +1873,41 @@ if page == pages[5] :
         <span>
         """
         st.markdown(text51, unsafe_allow_html=True)
-        st.image(
-            r"D:\Projections d'évolution de la population mondiale (ONU) 2024-2100.jpg",
-            caption="",use_column_width=True)
+        # Construire le chemin relatif vers l'image
+        chemin_image = os.path.join(os.getcwd(), "Projections d'évolution de la population mondiale (ONU) 2024-2100.jpg")
+        # Afficher l'image avec Streamlit
+        st.image(chemin_image, caption="", use_column_width=True)
         
     with col2:
         #st.write("Evolution population: réalité 1880-2023 et prédictions ARIMA 2024-2050")
-        df_ML0 = pd.read_csv("D:/df_ML0_pred.csv")
-        df_ML0['year']=df_ML0.year.astype(int)
-        merged_df = pd.read_csv("D:/merged_df_pred.csv")
-        merged_df['year']=merged_df.year.astype(str)
-        
-        df_future_clean = pd.read_csv("D:/df_future_clean.csv")
-        df_future_clean2=df_future_clean
-        df_future_clean2.year=df_future_clean2.year.astype(str)
-        df_future_clean2=df_future_clean2.set_index('year', drop=False)
-        
-        df_best_param_var_expl_excl_othco2 = pd.read_csv("D:/df_best_param_var_expl_excl_othco2.csv")
-        df_best_param_var_expl_others_co2 = pd.read_csv("D:/df_best_param_var_expl_others_co2.csv")
-        df_best_param_var_expl = pd.concat([df_best_param_var_expl_excl_othco2, df_best_param_var_expl_others_co2])
-        # Extraction des paramètres pour la variable 'population'
 
+        # Construire les chemins relatifs pour chaque fichier
+        chemin_df_ML0 = os.path.join(os.getcwd(), "df_ML0_pred.csv")
+        chemin_merged_df = os.path.join(os.getcwd(), "merged_df_pred.csv")
+        chemin_df_future_clean = os.path.join(os.getcwd(), "df_future_clean.csv")
+        chemin_df_param_excl_othco2 = os.path.join(os.getcwd(), "df_best_param_var_expl_excl_othco2.csv")
+        chemin_df_param_others_co2 = os.path.join(os.getcwd(), "df_best_param_var_expl_others_co2.csv")
+
+        # Charger et traiter df_ML0
+        df_ML0 = pd.read_csv(chemin_df_ML0)
+        df_ML0['year'] = df_ML0.year.astype(int)
+
+        # Charger et traiter merged_df
+        merged_df = pd.read_csv(chemin_merged_df)
+        merged_df['year'] = merged_df.year.astype(str)
+
+        # Charger et traiter df_future_clean
+        df_future_clean = pd.read_csv(chemin_df_future_clean)
+        df_future_clean2 = df_future_clean.copy()
+        df_future_clean2['year'] = df_future_clean2['year'].astype(str)
+        df_future_clean2 = df_future_clean2.set_index('year', drop=False)
+
+        # Charger et concaténer les fichiers des paramètres
+        df_best_param_var_expl_excl_othco2 = pd.read_csv(chemin_df_param_excl_othco2)
+        df_best_param_var_expl_others_co2 = pd.read_csv(chemin_df_param_others_co2)
+        df_best_param_var_expl = pd.concat([df_best_param_var_expl_excl_othco2, df_best_param_var_expl_others_co2])
+        
+        # Extraction des paramètres pour la variable 'population'
         params_row = df_best_param_var_expl[:1]
         if not params_row.empty:
             p = int(params_row['p'].values[0])
@@ -1924,10 +2013,14 @@ if page == pages[5] :
         <span>
         """
         st.markdown(text53, unsafe_allow_html=True)
+        # Construire le chemin relatif vers l'image
+        chemin_image = os.path.join(os.getcwd(), "Prédictions du GIEC de l'évolution de la température par rapport à la période préindustrielle (1890-1900).jpg")
+
+        # Afficher l'image avec Streamlit
         st.image(
-            r"D:\Prédictions du GIEC de l'évolution de la température par rapport à la période préindustrielle (1890-1900).jpg",
+            chemin_image,
             caption="",
-            use_column_width=True 
+            use_column_width=True
         )
     with col2:
         # Rappeler le graphe sauvegardé à l'étape précédente.
