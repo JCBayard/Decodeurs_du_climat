@@ -1876,7 +1876,7 @@ if page == pages[5] :
         # Construire le chemin relatif vers l'image
         chemin_image = os.path.join(os.getcwd(), "Projections d'évolution de la population mondiale (ONU) 2024-2100.jpg")
         # Afficher l'image avec Streamlit
-        st.image(chemin_image, caption="", use_column_width=True)
+        st.image(chemin_image, caption="", use_container_width=True)
         
     with col2:
         #st.write("Evolution population: réalité 1880-2023 et prédictions ARIMA 2024-2050")
@@ -2020,7 +2020,7 @@ if page == pages[5] :
         st.image(
             chemin_image,
             caption="",
-            use_column_width=True
+            use_container_width=True
         )
     with col2:
         # Rappeler le graphe sauvegardé à l'étape précédente.
