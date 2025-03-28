@@ -835,10 +835,10 @@ if page == pages[3] :
     # Placer le sélecteur de modèle dans la colonne de gauche
     with col1:
         model_type = st.selectbox("📌 Choisissez le type de modèle :", 
-                                ["Régression linéaire","Arbre de régression",  "Forêt aléatoire"])
+                                ["Régression linéaire (var: toutes)","Arbre de régression (var: toutes ou 4)",  "Forêt aléatoire (var: toutes ou 6)"])
 
         # 📌 Sélection du modèle en fonction du type choisi
-        if model_type == "Arbre de régression":
+        if model_type == "Arbre de régression (var: toutes ou 4)":
             model_choice = st.selectbox("📌 Choisissez le nombre de variables :", ["Toutes les variables.", "3 Variables", "4 Variables.","5 Variables", "6 Variables"])
             if model_choice == "Toutes les variables.":
                 df = df_ML1
@@ -847,7 +847,7 @@ if page == pages[3] :
                 df = df_ML2
                 model_path = os.path.join(os.getcwd(), "Modèle_dtr2.pkl")
             
-        elif model_type == "Régression linéaire":
+        elif model_type == "Régression linéaire (var: toutes)":
             model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables.", "3 Variables", "4 Variables","5 Variables", "6 Variables"])
             if model_choice == "Toutes les variables.":
                 df = df_ML3
@@ -857,7 +857,7 @@ if page == pages[3] :
                 df = df_ML4
                 model_path = os.path.join(os.getcwd(), "Modèle_LR2.pkl")
 
-        elif model_type == "Forêt aléatoire":
+        elif model_type == "Forêt aléatoire (var: toutes ou 6)":
             model_choice = st.selectbox("📌 Choisissez le nombre de variables", ["Toutes les variables.", "3 Variables", "4 Variables","5 Variables", "6 Variables."])
             # 📌 Case à cocher pour faire varier le split uniquement pour Forêt aléatoire
             #vary_split = st.checkbox("Faire varier le split du modèle Forêt aléatoire")
