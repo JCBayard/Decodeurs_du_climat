@@ -29,7 +29,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import RandomOverSampler
-from sklearn.compose import Transformer
+from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
@@ -247,7 +247,7 @@ if page == pages[1] :
         T_GLB["D-N"] = T_GLB["D-N"].replace("***", None).astype(float)  # Remplacer les astérisques et convertir en float
         T_GLB["DJF"] = T_GLB["DJF"].replace("***", None).astype(float)
 
-        col1, col2 = st.s([0.05, 0.95])
+        col1, col2 = st.columns([0.05, 0.95])
         with col2:
             if st.checkbox("Valeurs statistiques du dataframe", key="stats_nasa"):
                 st.dataframe(T_GLB.describe())
