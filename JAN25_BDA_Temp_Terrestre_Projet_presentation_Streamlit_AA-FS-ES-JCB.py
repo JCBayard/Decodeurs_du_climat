@@ -61,7 +61,7 @@ st.markdown(custom_width_style, unsafe_allow_html=True)
 # Construire le chemin relatif vers l'image
 chemin_image = os.path.join(os.getcwd(), "Logo Les Décodeurs du Climat.jpg")
 # Charger l'image avec Streamlit
-st.image(chemin_image, width=150, caption="", use_column_width=True)
+st.image(chemin_image, width=150, caption="", use_container_width=True)
 
 from PIL import Image
 
