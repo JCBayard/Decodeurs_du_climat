@@ -1053,7 +1053,7 @@ if page == pages[4] :
     with col1:
         st.write("### Modèle prédictif : stationnarité et saisonnalité")
     with col2:
-        box_ticked = st.checkbox("", label_visibility="Go!")
+        box_ticked = st.checkbox("Go!")
 
     # Action conditionnelle si la checkbox est cochée
     if box_ticked:
@@ -1193,8 +1193,8 @@ if page == pages[4] :
 
                         # Checkbox pour le tableau spécifique
                         tableau_others_co2 = st.checkbox(
-                            "tableau others_co2",
-                            label_visibility="Suite #1",
+                            "Suite #1",
+                            label_visibility="visible",
                             value=st.session_state.tableau_others_co2_checked
                         )
 
@@ -1233,7 +1233,7 @@ if page == pages[4] :
 
             col1,col2 = st.columns([0.1,5])
             with col2:
-                box_ticked_2 = st.checkbox("ouverture section suivante", label_visibility="Suite #2")
+                box_ticked_2 = st.checkbox("Suite #2", label_visibility="visible")
 
     # Action conditionnelle si la checkbox est cochée
             if box_ticked_2:
@@ -1336,7 +1336,7 @@ if page == pages[4] :
             
                 col1,col2 = st.columns([0.1,5])
                 with col2:
-                    box_ticked = st.checkbox("prédictions var cible", label_visibility="Suite #3")
+                    box_ticked = st.checkbox("Suite #3", label_visibility="visible")
                 st.write(".............................................................................................................................................................................................................................................................................................................................................")                        
                 if box_ticked:
                     
@@ -1680,7 +1680,7 @@ if page == pages[4] :
 
                     col1,col2 = st.columns([0.1,5])
                     with col2:
-                        box_ticked = st.checkbox("prédictions ARIMA", label_visibility="Suite #4")
+                        box_ticked = st.checkbox("Suite #4", label_visibility="visible") #prédictions ARIMA
                     st.write(".............................................................................................................................................................................................................................................................................................................................................")                        
                     if box_ticked:
                             st.write("### Prédictions ARIMA de la variable cible")
