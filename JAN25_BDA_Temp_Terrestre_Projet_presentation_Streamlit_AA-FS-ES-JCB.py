@@ -1037,12 +1037,24 @@ if page == pages[4] :
     scroll_to_top() # appel de la fonction pour remonter en haut de la page
     st.write("# Prédictions")
     
+    # Code CSS pour avoir les intitulés de check boxes en gris léger
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stCheckbox"] label {
+            color: lightgray;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.write("## Prédictions des variables explicatives")
     col1, col2 = st.columns([4, 5])  # La première colonne est plus large pour le texte
     with col1:
         st.write("### Modèle prédictif : stationnarité et saisonnalité")
     with col2:
-        box_ticked = st.checkbox("", label_visibility="hidden")
+        box_ticked = st.checkbox("", label_visibility="Go!")
 
     # Action conditionnelle si la checkbox est cochée
     if box_ticked:
@@ -1183,7 +1195,7 @@ if page == pages[4] :
                         # Checkbox pour le tableau spécifique
                         tableau_others_co2 = st.checkbox(
                             "tableau others_co2",
-                            label_visibility="hidden",
+                            label_visibility="Suite #1",
                             value=st.session_state.tableau_others_co2_checked
                         )
 
@@ -1222,7 +1234,7 @@ if page == pages[4] :
 
             col1,col2 = st.columns([0.1,5])
             with col2:
-                box_ticked_2 = st.checkbox("ouverture section suivante", label_visibility="hidden")
+                box_ticked_2 = st.checkbox("ouverture section suivante", label_visibility="Suite #2")
 
     # Action conditionnelle si la checkbox est cochée
             if box_ticked_2:
@@ -1325,7 +1337,7 @@ if page == pages[4] :
             
                 col1,col2 = st.columns([0.1,5])
                 with col2:
-                    box_ticked = st.checkbox("prédictions var cible", label_visibility="hidden")
+                    box_ticked = st.checkbox("prédictions var cible", label_visibility="Suite #3")
                 st.write(".............................................................................................................................................................................................................................................................................................................................................")                        
                 if box_ticked:
                     
@@ -1669,7 +1681,7 @@ if page == pages[4] :
 
                     col1,col2 = st.columns([0.1,5])
                     with col2:
-                        box_ticked = st.checkbox("prédictions ARIMA", label_visibility="hidden")
+                        box_ticked = st.checkbox("prédictions ARIMA", label_visibility="Suite #4")
                     st.write(".............................................................................................................................................................................................................................................................................................................................................")                        
                     if box_ticked:
                             st.write("### Prédictions ARIMA de la variable cible")
@@ -1839,11 +1851,11 @@ if page == pages[4] :
                         
 if page == pages[5] : 
     scroll_to_top() # appel de la fonction pour remonter en haut de la page
-    if "checkbox_state" not in st.session_state:
-        st.session_state.checkbox_state = False
+    #if "checkbox_state" not in st.session_state:
+    #    st.session_state.checkbox_state = False
 
-        checkbox = st.checkbox("conclusion", value=st.session_state.checkbox_state)
-        st.session_state.checkbox_state = checkbox
+    #    checkbox = st.checkbox("conclusion", value=st.session_state.checkbox_state)
+    #    st.session_state.checkbox_state = checkbox
 
     st.markdown("# Pertinence & Conclusion")
     st.markdown("## Pertinence : Sources alternatives vs. Nos Prédictions")
