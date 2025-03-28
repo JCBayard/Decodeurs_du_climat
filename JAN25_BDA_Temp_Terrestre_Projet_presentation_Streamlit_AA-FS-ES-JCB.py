@@ -1035,7 +1035,6 @@ if page == pages[3] :
  
 if page == pages[4] : 
     scroll_to_top() # appel de la fonction pour remonter en haut de la page
-    st.write("# Prédictions")
     
     # Code CSS pour avoir les intitulés de check boxes en gris léger
     st.markdown(
@@ -1048,7 +1047,7 @@ if page == pages[4] :
         """,
         unsafe_allow_html=True
     )
-
+    st.write("# Prédictions")
     st.write("## Prédictions des variables explicatives")
     col1, col2 = st.columns([4, 5])  # La première colonne est plus large pour le texte
     with col1:
