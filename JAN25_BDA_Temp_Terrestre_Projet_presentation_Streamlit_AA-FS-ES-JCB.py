@@ -840,17 +840,17 @@ if page == pages[3] :
         # 📌 Sélection du modèle en fonction du type choisi
         if model_type == "Arbre de régression":
             model_choice = st.selectbox("📌 Choisissez le nombre de variables :", ["Toutes les variables","4 Variables"])
-            if model_choice == "Toutes les variables.":
+            if model_choice == "Toutes les variables":
                 df = df_ML1
                 model_path = os.path.join(os.getcwd(), "Modèle_dtr.pkl")
-            elif model_choice == "4 Variables.":
+            elif model_choice == "4 Variables":
                 df = df_ML2
                 model_path = os.path.join(os.getcwd(), "Modèle_dtr2.pkl")
             
         elif model_type == "Régression linéaire":
             #model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables.", "3 Variables", "4 Variables","5 Variables", "6 Variables"])
-            model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables"])
-            if model_choice == "Toutes les variables.":
+            model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables","5 Variables"])
+            if model_choice == "Toutes les variables":
                 df = df_ML3
                 model_path = os.path.join(os.getcwd(), "Modèle_LR1.pkl")
 
@@ -877,7 +877,7 @@ if page == pages[3] :
             # Utilisation du slider
             raw_choice = st.slider("Choisissez un ratio de split :", 0.2, 0.5, step=0.05)
             model_choice_split = adjust_value(raw_choice)
-            if model_choice == "Toutes les variables.":
+            if model_choice == "Toutes les variables":
                 df = df_ML5
                 
                 if model_choice_split == 0.2:
@@ -887,7 +887,7 @@ if page == pages[3] :
                 elif model_choice_split == 0.5:
                     model_path = os.path.join(os.getcwd(), "Modèle_RFR2.pkl")
             
-            elif model_choice == "6 Variables.":
+            elif model_choice == "6 Variables":
                 df = ML6_best
                 model_choice_split == 0.25
                 model_path = os.path.join(os.getcwd(), "Modèle_RFR_6.pkl")
