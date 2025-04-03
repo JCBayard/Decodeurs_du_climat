@@ -849,7 +849,7 @@ if page == pages[3] :
             
         elif model_type == "Régression linéaire":
             #model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables.", "3 Variables", "4 Variables","5 Variables", "6 Variables"])
-            model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables","5 Variables"])
+            model_choice = st.selectbox("📌 Choisissez le nombre de variables:", ["Toutes les variables"])
             if model_choice == "Toutes les variables":
                 df = df_ML3
                 model_path = os.path.join(os.getcwd(), "Modèle_LR1.pkl")
@@ -929,7 +929,7 @@ if page == pages[3] :
                 st.write(" ")
 
         # Ajouter une case à cocher pour afficher/masquer le tableau
-        afficher = st.checkbox("Afficher les résultats")
+        afficher = st.checkbox("Dataframe") #"Afficher les résultats"
 
         # Afficher le dataframe en fonction de la case à cocher
         afficher_dataframe(df, afficher)
